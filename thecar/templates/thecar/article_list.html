@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title%}
+    文章列表
+{% endblock%}
+
+
+{% block nav%}
+{% load staticfiles %}
+<div style="margin: auto; text-align: center; height: 500px; width: 1200px">
+<div class="col-md-9" style="width: 250px;height: 400px">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="panel-title">文章列表</h2>
+        </div>
+        <div class="panel-body">
+            <h3>{{msg}}</h3>
+            <table class="table table-hover table-bordered table-striped">
+                <tr>
+                    <td>文章标识</td>
+                    <td>文章标题</td>
+                    <td>文章内容</td>
+                    <td>点击量</td>
+<!--                    <td>作者</td>-->
+                    <td>操作</td>
+                </tr>
+                {% for at in articles %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><a href="{% url 'thecar:article_detail' at.id %}">{{ at.title | safe | truncatechars:15 }}</a></td>
+                    <td><a href="{% url 'thecar:article_detail' at.id %}">{{ at.content | safe | truncatechars:15 }}</a></td>
+                    <td>{{ at.count }}</td>
+                    {#<td><a href="{% url 'thecar:show' at.author.id %}">{{ at.author.nickname }}</a></td>#}
+                    <td>
+                        <a onclick="return window.confirm('您确定要删除该这篇文章吗？');" href="{% url 'thecar:article_delete' at.id %}" class="btn btn-danger">删除</a>
+                        <a href="{% url 'thecar:article_update' at.id %}" class="btn btn-warning" >修改</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7">对不起，当前没有文章， <a href="{% url 'thecar:article_add' %}">请添加文章</a></td>
+                </tr>
+                {% endfor%}
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

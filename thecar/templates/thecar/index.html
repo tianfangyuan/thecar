@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block list %}
+{% load staticfiles %}
+
+                <style>
+                    a{
+                        color: black;
+                    }
+                </style>
+              {% for at in page.object_list %}
+
+                <div class="row row1" style="width: 950px;margin-bottom: 20px">
+
+
+                    <div class="col-md-3" style="margin: auto;width: 200px">
+                        <img style="margin: auto;width: 120px;height: 120px;margin-top: 9px" src="/{{ at.author.userinfo.avatar }}" class="img-circle">
+
+                    </div>
+                    <div class="col-md-9">
+                        <div class="col-md-9">
+                        <ul class="nav nav-pills nav-stacked"><h3><a href="{% url 'thecar:article_show' at.id %}">{{ at.title | safe | truncatechars:15 }}</a></h3></ul>
+                        <ul class="nav nav-pills nav-stacked"><p><a href="{% url 'thecar:article_show' at.id %}">{{ at.content | safe | truncatechars:50 }}</a></p></ul>
+
+                        </div>
+                        <div class="col-md-3"><h4 style="margin-top: 20px">作者：{{ at.author }}</h4></div>
+                    </div>
+
+                </div>
+                {% endfor %}
+
+
+            <div class="row text-center">
+                <nav aria-label="Page navigation">
+                  <ul class="pagination">
+                      <!--首页-->
+                    {% if page.number != 1 %}
+                    <li><a href="/thecar/index/?pageNow=1">首页</a></li>
+                    {% endif %}
+                      <!--上一页-->
+                    {% if page.has_previous %}
+                        <li><a href="/thecar/index/?pageNow={{page.previous_page_number}}">上一页</a></li>
+                    {% endif %}
+
+                    {% for p in page.paginator.page_range %}
+                      {% if p > page.number|add:'-3' and p < page.number|add:'3' %}
+                        {% if p == page.number %}
+                        <li class="active"><a href="/thecar/index/?pageNow={{p}}">{{p}}</a></li>
+                        {% else %}
+                        <li><a href="/thecar/index/?pageNow={{p}}">{{p}}</a></li>
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+
+                    {% if page.has_next %}
+                       <li><a href="/thecar/index/?pageNow={{page.next_page_number}}">下一页</a></li>
+                      {% endif %}
+                      {% if page.number != page.paginator.num_pages %}
+                      <li><a href="/thecar/index/?pageNow={{page.paginator.num_pages}}">尾页</a></li>
+                      {% endif %}
+                  </ul>
+                </nav>
+            </div>
+
+{% endblock %}

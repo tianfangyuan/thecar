@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="apple-touch-icon" sizes="76x76" href="{% static 'thecar/img/apple-icon.png' %}">
+		<link rel="icon" type="image/png" href="{% static 'TheCar/img/apple-icon.png' %}">
+		<title>车吧~注册</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'thecar/js/lib/bootstrap-3.3.7-dist/css/bootstrap.css' %}"/>
+		<link rel="stylesheet" type="text/css" href="{% static 'thecar/css/reg.css' %}"/>
+		<script src="{% static 'thecar/js/lib/jQuery/jquery-1.12.4.js' %}" type="text/javascript" charset="utf-8"></script>
+		<script src="{% static 'thecar/js/lib/bootstrap-3.3.7-dist/js/bootstrap.js' %}" type="text/javascript" charset="utf-8"></script>
+		<script>
+			function change_code(){
+				$("#mycode").attr("src","/TheCar/code/?id="+new Date().getTime())
+			}
+		</script>
+
+	</head>
+	<body>
+		<div class="bg">
+			<img src="{% static 'thecar/img/login1.jpg' %}" >
+			
+			<div class="b">
+				<div class="navbar-header">
+					<h1>TheCar</h1>
+				</div>
+				<div class="container">
+					<div class="btn-group btn-group-justified" role="group" aria-label="...">
+						<div class="btn-group" role="group">
+							<div class="btn btn-default"><a href="{% url 'thecar:user_login' %}">登录</a></div>
+						</div>
+						<div class="btn-group" role="group">
+							<div class="btn btn-default">注册</div>
+						</div>
+					</div>
+					<div class="bu" style="height: 5px;"></div>
+					<h4 class="text-center text-danger">{{msg}}</h4>
+          			<form action="{% url 'thecar:reg' %}" method="post" autocomplete="off">
+					{% csrf_token %}
+						<div class="input-group hd1">
+							<span class="input-group-addon sp1"><em class="glyphicon glyphicon-user"></em></span>
+							<input type="text" id="username" name="username" placeholder="用户账号" aria-describedby="basic-addon1">
+						</div>
+						<div class="input-group">
+							<span class="input-group-addon sp1"><em class="glyphicon glyphicon-phone"></em></span>
+							<input type="text" id="nickname" name="nickname" placeholder="用户昵称" aria-describedby="basic-addon1">
+						</div>
+						<div class="input-group hd2">
+							<span class="input-group-addon"><em class="glyphicon glyphicon-lock"></em></span>
+							<input type="password" id="password" name="password" placeholder="用户密码" aria-describedby="basic-addon1">
+						</div>
+
+						<div class="input-group hd2">
+							<span class="input-group-addon"><em class="glyphicon glyphicon-lock"></em></span>
+							<input type="password" id="confirm_pwd" name="confirm_pwd" placeholder="确认密码" aria-describedby="basic-addon1">
+						</div>
+
+						<div class="input-group hd2 hd3">
+							<span class="input-group-addon yzm1" id="code"><img id="mycode" onclick="change_code()" src="{% url 'thecar:code' %}" ></span>
+							<input name="code" class="yzm" type="text" placeholder="请填写验证码" aria-describedby="basic-addon1">
+						</div>
+
+						<div class="form-group">
+							<a href="{% url 'thecar:user_login' %}"><button type="submit" id="submit" class="btn btn-warning btn-lg btn-block">注册</button></a>
+							<h1>点击 “注册” 即表示您同意并愿意遵守简书<br>
+							<a href="#">用户协议</a> 和 <a href="#">隐私政策 </a>。</h1>
+							<div class="row">
+							  <div class="col-md-4">——————</div>
+							  <div class="col-md-4">社交账号注册</div>
+							  <div class="col-md-4">——————</div>
+							</div>
+							<div class="foot">
+							  <div class="col-md-6"><a href="#"><img src="{% static 'thecar/img/微信%20(2).png' %}" ></a></div>
+							  <div class="col-md-5"><a href="#"><img src="{% static 'thecar/img/QQ%20(1).png' %}" ></a></div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

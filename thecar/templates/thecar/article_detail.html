@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title%}
+    文章详情
+{% endblock%}
+
+
+{% block nav%}
+{% load staticfiles %}
+<div style="margin: auto; text-align: center; height: 500px; width: 1200px">
+<div class="col-md-3 " style="width: 250px;height: 400px">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">个人信息</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            {% if request.user %}
+                            <img style="width: 50px;height: 50px;" src="/{{ user.userinfo.avatar}}" alt="..." class="img-circle avatar">
+                            {% else %}
+                            <img src="{% static 'img/default.jpg' %}" alt="..." class="img-circle avatar">
+                            {% endif %}
+                        </li>
+                        {% if request.user %}
+                        <li class="list-group-item">姓名：{{ user.userinfo.nickname }}</li>
+                        <li class="list-group-item">性别：{{ user.userinfo.gender }}</li>
+                        {% else %}
+                        <li class="list-group-item">姓名: hello </li>
+                        <li class="list-group-item">性别：男/女 </li>
+                        {% endif %}
+                        <li class="list-group-item">
+                           <a href="{% url 'thecar:index' %}">车吧主页</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'thecar:article_self' %}">我的文章</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'thecar:article_add' %}">添加文章</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'thecar:article_self' %}">返回</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+<div class="col-md-9">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="panel-title">{{article.title}}</h2>
+        </div>
+        <div class="panel-body">
+            <div style="text-align: center">
+                发表时间：{{article.publish_time}} |
+                修改时间：{{article.modify_time}}  |
+                作者： {{article.author}} |
+                点击量 {{article.count}}
+            </div>
+            <hr>
+            <p class="content" >
+                {{article.content}}
+            </p>
+
+        </div>
+    </div>
+</div>
+</div>
+{% endblock%}
